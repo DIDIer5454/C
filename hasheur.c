@@ -1,4 +1,4 @@
-//#include <openssl/ssl.h>
+#include <openssl/evp.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -65,13 +65,12 @@ int main(int argc ,char *argv[]){
 		//On ecrit le duo mot-condensat dans le fichier 
 		FILE *fp;
 		fp = fopen(argv[1],"r");
-		printf("%s");
 		char* buffer=malloc(255*sizeof(char));
 		int nb=0;
-		nb = fscanf(fp,"%s",&buffer);
+		nb = fscanf(fp,"%s",buffer);
 		while(nb != EOF){
 			printf("%s\n",buffer);
-			nb = fscanf(fp,"%s",&buffer);
+			nb = fscanf(fp,"%s",buffer);
 			
 		}
 	}
