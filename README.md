@@ -1,9 +1,9 @@
 # C
 
-##Compilation :
+## Compilation :
 ```gcc hasheur.c -o t3c```
 
-##Avec Docker
+## Avec Docker
 On doit d'abord changer le nom du dictionnaire par dico.txt ou modifiez le dans le Dockerfile.
 Ensuite vous buildez votre image.
 
@@ -12,7 +12,7 @@ Ensuite vous buildez votre image.
 On peut ensuite rentrer dans le conteneur pour utiliser le binaire
 ```sudo docker run -it compilateur_c```
 
-##Fonctionnement:
+## Fonctionnement:
 
 - Deux modes : L et G 
 
