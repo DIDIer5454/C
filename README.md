@@ -3,5 +3,5 @@ Désolé l'école était fermée depuis Jeudi ,j'ai essayé de faire un peu tout
 
 
 Compilation :
-'''gcc hasheur.c -o t3c'''
+```gcc hasheur.c -o t3c```
 
