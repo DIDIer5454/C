@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -67,20 +68,20 @@ int main(int argc ,char *argv[]){
 		if(strcmp(argv[1],"G")==0){
 		char alg[128];
 		strcpy(alg,"md5");
-		if(argc>=7){
+		if(argc==8){
 			strcpy(alg,argv[7]);
 		}
 //		printf("algo::%s",alg);
 		FILE *fp=NULL;
 		char ligne[TAILLE_MAX];
 		fp = fopen(argv[3],"r");
-		printf("fichier::%s\n",argv[3]);
+//		printf("fichier::%s\n",argv[3]);
 		//char* buffer=malloc(255*sizeof(char));
 		int nb=0;
 		FILE *n=fopen(argv[5],"w");
 		//nb = fscanf(fp,"%s",buffer);
 		while(fgets(ligne,sizeof(ligne),fp)!=NULL){
-			printf("%s\n",ligne);
+			//printf("%s\n",ligne);
 			char *cmd="";
 			char debut_cmd[TAILLE_MAX*2]="echo ";
 			char ligne2[TAILLE_MAX]="";
@@ -100,7 +101,7 @@ int main(int argc ,char *argv[]){
 				strncpy(retour,retour2,strlen(retour2)-1);
 				strcat(retour," ");
 				strcat(retour,ligne);
-				printf("test:::%s",retour);
+//				printf("test:::%s",retour);
 				fputs(retour,n);
 			}
 	//		printf("yoyo:::%s",retour2);
@@ -113,10 +114,40 @@ int main(int argc ,char *argv[]){
 		fclose(fp);
 		fclose(n);
 		return 0;
-		}
-	
+		}else{
+			char alg[128];
+			FILE *fp=NULL;
+			char mot[TAILLE_MAX]="";
+			fp = fopen(argv[3],"r");
+			char trouve[TAILLE_MAX]="";
+			char claire[TAILLE_MAX];
+			char retour[TAILLE_MAX];
+			bool trouv= false;
+			while(strcmp(mot,"end")!=0){
+			    	scanf( "%[^\n]", mot );
+//				char debut_cmd[TAILLE_MAX*2]="sort ";
+//				strcat(debut_cmd,argv[3]);
+//				FILE *f=popen(debut_cmd,"r");
+				while(fgets(retour,sizeof(retour),fp)!=NULL){
+					char hash[128]="";
+					sscanf(retour,"%s  %s",hash,claire);
+					printf("%s\n",hash);
+					if(strcmp(hash,mot)==0){
+						strcpy(trouve,claire);
+						printf("mot trouvée: %s",claire);
+						trouv=true;
+						break;
+					}
+						//printf("yoyo\n");
+				}
+				//pclose(f);
+			if(trouv){
+				trouv=false;
+			}
+			}
+			fclose(fp);
+			return 0;
+			}
 	}
 
-
 }
-
