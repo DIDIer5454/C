@@ -1,8 +1,9 @@
-#include <openssl/evp.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#define TAILLE_MAX 1000
 
 bool d=false;
 
@@ -63,32 +64,59 @@ int main(int argc ,char *argv[]){
 		//On lit le dictionnaire (on ouvre un fichier en lecture si il existe)
 		//Puis on cree et/ou ouvre un fichier en ecriture
 		//On ecrit le duo mot-condensat dans le fichier 
-		FILE *fp;
-		fp = fopen(argv[1],"r");
-		char* buffer=malloc(255*sizeof(char));
-		int nb=0;
-		nb = fscanf(fp,"%s",buffer);
-		while(nb != EOF){
-			printf("%s\n",buffer);
-			nb = fscanf(fp,"%s",buffer);
-			
+		if(strcmp(argv[1],"G")==0){
+		char alg[128];
+		strcpy(alg,"md5");
+		if(argc>=7){
+			strcpy(alg,argv[7]);
 		}
+//		printf("algo::%s",alg);
+		FILE *fp=NULL;
+		char ligne[TAILLE_MAX];
+		fp = fopen(argv[3],"r");
+		printf("fichier::%s\n",argv[3]);
+		//char* buffer=malloc(255*sizeof(char));
+		int nb=0;
+		FILE *n=fopen(argv[5],"w");
+		//nb = fscanf(fp,"%s",buffer);
+		while(fgets(ligne,sizeof(ligne),fp)!=NULL){
+			printf("%s\n",ligne);
+			char *cmd="";
+			char debut_cmd[TAILLE_MAX*2]="echo ";
+			char ligne2[TAILLE_MAX]="";
+			strncpy(ligne2,ligne,strlen(ligne)-1);
+			strcat(debut_cmd,ligne2);
+			strcat(debut_cmd,"|");
+			strcat(debut_cmd,"openssl ");
+			strcat(debut_cmd,alg);
+			FILE *f=popen(debut_cmd,"r");
+			char retour[1024];
+			char retour2[1024];
+			while(fgets(retour,sizeof(retour),f)!=NULL){
+			//	printf("%s\n",retour);
+				char algo[128];
+				sscanf(retour,"%[^=]= %[^=]",algo,retour2);
+				memset(retour,'\0',strlen(retour)+1);
+				strncpy(retour,retour2,strlen(retour2)-1);
+				strcat(retour," ");
+				strcat(retour,ligne);
+				printf("test:::%s",retour);
+				fputs(retour,n);
+			}
+	//		printf("yoyo:::%s",retour2);
+			pclose(f);
+
+//			printf("cmd::::%s::::\n",debut_cmd);
+//			system(debut_cmd);
+		//	nb = fscanf(fp,"%s",buffer);
+		}
+		fclose(fp);
+		fclose(n);
+		return 0;
+		}
+	
 	}
 
-	
+
 }
-		
 
-	
-/*
-	char dictionnary[255];
-	char salt[255];
-	if (d==true){
-		strcpy(salt,argv[4]);
-		strcpy(dictionnary,argv[2]);
-	}else{
-		strcpy(dictionnary,argv[1]);
-	}
-	
-
-}*/
