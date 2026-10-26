@@ -151,3 +151,15 @@ int main(int argc ,char *argv[]){
 	}
 
 }
+/*
+	char dictionnary[255];
+	char salt[255];
+	if (d==true){
+		strcpy(salt,argv[4]);
+		strcpy(dictionnary,argv[2]);
+	}else{
+		strcpy(dictionnary,argv[1]);
+	}
+
+
+}*/
