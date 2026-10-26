@@ -115,37 +115,40 @@ int main(int argc ,char *argv[]){
 		fclose(n);
 		return 0;
 		}else{
-			char alg[128];
+	//		char alg[128];
 			FILE *fp=NULL;
 			char mot[TAILLE_MAX]="";
-			fp = fopen(argv[3],"r");
 			char trouve[TAILLE_MAX]="";
 			char claire[TAILLE_MAX];
 			char retour[TAILLE_MAX];
 			bool trouv= false;
+			fp = fopen(argv[3],"r");
 			while(strcmp(mot,"end")!=0){
-			    	scanf( "%[^\n]", mot );
+			    	scanf( "%s", mot );
+				fp = fopen(argv[3],"r");
 //				char debut_cmd[TAILLE_MAX*2]="sort ";
 //				strcat(debut_cmd,argv[3]);
 //				FILE *f=popen(debut_cmd,"r");
 				while(fgets(retour,sizeof(retour),fp)!=NULL){
 					char hash[128]="";
 					sscanf(retour,"%s  %s",hash,claire);
-					printf("%s\n",hash);
+					//printf("%s\n",hash);
 					if(strcmp(hash,mot)==0){
 						strcpy(trouve,claire);
-						printf("mot trouvée: %s",claire);
+						printf("mot trouvée: %s\n",claire);
 						trouv=true;
 						break;
 					}
 						//printf("yoyo\n");
 				}
 				//pclose(f);
+			fclose(fp);
 			if(trouv){
 				trouv=false;
+			}else{
+				printf("rien a été trouvé\n");
 			}
 			}
-			fclose(fp);
 			return 0;
 			}
 	}
